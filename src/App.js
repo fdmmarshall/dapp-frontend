@@ -66,7 +66,7 @@ const connectWallet = async () => {
         </div>
 
         <div className="font-mono text-center">
-        I'm a software developer, in my free time I like to learn about web3. I like a good laugh, so please send me a meme!
+        I'm a software developer, in my free time I like to learn about web3. I'm always up for a good laugh, so send me a meme!
         </div>
 
         <button className="m-1 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" onClick={meme}>
