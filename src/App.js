@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
-//import { ethers } from "ethers";  // eslint-disable-next-line
+import { ethers } from "ethers";
+import abi from './utils/MemePortal.json'
 import './App.css';
 
 const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
+
+  const contractAddress = "0xA72Fd9fF5CFC715C17E9fD04e39E4A97557871d0";
+
+  const contractABI = abi.abi;
 
   const checkIfWalletIsConnected = async () => {
   try { const { ethereum } = window;
@@ -48,14 +53,39 @@ const connectWallet = async () => {
   }
 }
 
+const meme = async () => {
+    try{
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const memePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+
+        let count = await memePortalContract.getTotalMemes();
+        console.log("Retrieved total meme count...", count.toNumber());
+
+        const memeTxn = await memePortalContract.sendMeme();
+        console.log("Mining -- ", memeTxn.hash);
+
+        await memeTxn.wait();
+        console.log("Minied -- ", memeTxn.hash);
+
+        count = await memePortalContract.getTotalMemes();
+        console.log("Retrieved total meme count...", count.toNumber());
+      } else {
+        console.log("Ethereum object doesn't exist");
+      }
+    } catch (error) {
+      console.log(error)
+    }
+}
+
 
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
 
-  const meme = () => {
-    
-  }
   
   return (
     <div className="mainContainer">
