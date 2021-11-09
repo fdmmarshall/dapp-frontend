@@ -1,8 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+
 .mainContainer {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
   margin-top: 64px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .dataContainer {
@@ -30,5 +34,8 @@
   padding: 8px;
   border: 0;
   border-radius: 5px;
-  
+}
+
+.fileContainer {
+  border: 1px solid rgb(29, 78, 216);
 }
