@@ -34,7 +34,7 @@ const App = (props) => {
     }
   };
 
-  const contractAddress = '0xA72Fd9fF5CFC715C17E9fD04e39E4A97557871d0';
+  const contractAddress = '0x199649FF8Dc2190482ADbbe683d7a2d5534Ca65d';
 
   const contractABI = abi.abi;
 
