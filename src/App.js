@@ -14,7 +14,7 @@ const client = create({
 
 const App = (props) => {
   const [currentAccount, setCurrentAccount] = useState('');
-  const [pictures, setPicture] = useState(null);
+  const [setPicture] = useState(null);
   const [fileUrl, setFileUrl] = useState([]);
 
   const captureFile = async (pictures) => {
