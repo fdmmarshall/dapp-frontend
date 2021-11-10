@@ -133,7 +133,7 @@ const App = (props) => {
         let count = await memePortalContract.getTotalMemes();
         console.log('Retrieved total meme count...', count.toNumber());
 
-        const memeTxn = await memePortalContract.sendMeme();
+        const memeTxn = await memePortalContract.sendMeme(fileUrl);
         console.log('Mining -- ', memeTxn.hash);
 
         await memeTxn.wait();
