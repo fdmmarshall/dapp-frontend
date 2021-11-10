@@ -8,7 +8,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "ethers": "^5.4.4",
-    "ipfs-api": "^26.1.2",
+    "ipfs-http-client": "^53.0.1",
     "react": "^16.14.0",
     "react-dom": "^16.12.0",
     "react-images-upload": "^1.2.8",

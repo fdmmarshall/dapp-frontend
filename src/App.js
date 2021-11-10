@@ -3,16 +3,35 @@ import { ethers } from 'ethers';
 import ImageUploading from 'react-images-upload';
 import ProfileSection from './components/ProfileSection';
 import abi from './utils/MemePortal.json';
+import { create } from 'ipfs-http-client';
 import './App.css';
+
+const client = create({
+  host: 'ipfs.infura.io',
+  port: 5001,
+  protocol: 'https',
+});
 
 const App = (props) => {
   const [currentAccount, setCurrentAccount] = useState('');
-  const [image, setImage] = useState('');
+  const [pictures, setPicture] = useState(null);
+  const [fileUrl, setFileUrl] = useState([]);
 
-  const onDrop = (image) => {
-    setImage([...image, image[0]]);
+  const captureFile = async (pictures) => {
+    const data = pictures[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(data);
 
-    console.log(image);
+    reader.onloadend = () => {
+      setPicture(Buffer(reader.result));
+    };
+    try {
+      const created = await client.add(pictures);
+      const url = `http://ipfs.infura.io/ipfs/${created.path}`;
+      setFileUrl((prev) => [...prev, url]);
+    } catch (error) {
+      console.log('Error uploading file:', error);
+    }
   };
 
   const contractAddress = '0xA72Fd9fF5CFC715C17E9fD04e39E4A97557871d0';
@@ -131,8 +150,7 @@ const App = (props) => {
         <div className='m-8'>
           <ImageUploading
             {...props}
-            value={image[0]}
-            onChange={onDrop}
+            onChange={captureFile}
             withIcon={true}
             withPreview={true}
             singleImage={true}
@@ -156,6 +174,14 @@ const App = (props) => {
             >
               Send a meme!
             </button>
+          </div>
+
+          <div className='display'>
+            {fileUrl.length !== 0 ? (
+              fileUrl.map((el) => <img src={el} alt='meme' />)
+            ) : (
+              <h3>{fileUrl}</h3>
+            )}
           </div>
         </div>
       </div>
