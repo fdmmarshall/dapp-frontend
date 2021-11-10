@@ -210,6 +210,21 @@ const App = (props) => {
             </button>
           </div>
         </div>
+        <div>
+          <ul className='divide-y divide-gray-200'>
+            {allMemes.map((meme, index) => (
+              <li key={allMemes.email} className='py-4 flex'>
+                <img className='' src={allMemes.fileUrl} alt='' />
+                <div className='ml-3'>
+                  <p className='text-sm font-medium text-gray-900'>
+                    {allMemes.address}
+                  </p>
+                  <p className='text-sm text-gray-500'>{allMemes.timestamp}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
