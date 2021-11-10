@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import ImageUploading from 'react-images-upload';
 import ProfileSection from './components/ProfileSection';
 import abi from './utils/MemePortal.json';
+import * as IPFS from 'ipfs-core';
 import './App.css';
 
 const App = (props) => {
@@ -12,6 +13,11 @@ const App = (props) => {
   const onDrop = (image) => {
     setImage(image);
   };
+
+  //for testing
+  const ipfs = async () => await IPFS.create();
+  const { cid } = async () => await ipfs.add('hello world');
+  console.info(cid);
 
   const contractAddress = '0xA72Fd9fF5CFC715C17E9fD04e39E4A97557871d0';
 
@@ -129,6 +135,7 @@ const App = (props) => {
         <div className='m-8'>
           <ImageUploading
             {...props}
+            value={image}
             onChange={onDrop}
             withIcon={true}
             imgExtension={['.jpg', '.gif', '.png']}
