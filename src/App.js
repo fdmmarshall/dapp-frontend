@@ -26,7 +26,7 @@ const App = (props) => {
       setPicture(Buffer(reader.result));
     };
     try {
-      const created = await client.add(pictures);
+      const created = await client.add(pictures, { pin: true });
       const url = `http://ipfs.infura.io/ipfs/${created.path}`;
       setFileUrl((prev) => [...prev, url]);
     } catch (error) {
@@ -93,7 +93,8 @@ const App = (props) => {
         const memePortalContract = new ethers.Contract(
           contractAddress,
           contractABI,
-          signer
+          signer,
+          fileUrl
         );
 
         let count = await memePortalContract.getTotalMemes();
@@ -174,14 +175,6 @@ const App = (props) => {
             >
               Send a meme!
             </button>
-          </div>
-
-          <div className='display'>
-            {fileUrl.length !== 0 ? (
-              fileUrl.map((el) => <img src={el} alt='meme' />)
-            ) : (
-              <h3>{fileUrl}</h3>
-            )}
           </div>
         </div>
       </div>
