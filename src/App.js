@@ -14,7 +14,7 @@ const client = create({
 
 const App = (props) => {
   const [currentAccount, setCurrentAccount] = useState('');
-  const [setPicture] = useState(null);
+  const [picture, setPicture] = useState(null);
   const [fileUrl, setFileUrl] = useState([]);
 
   const captureFile = async (pictures) => {
@@ -79,6 +79,7 @@ const App = (props) => {
 
       console.log('Connected', accounts[0]);
       setCurrentAccount(accounts[0]);
+      getAllMemes();
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +98,7 @@ const App = (props) => {
           signer
         );
 
-        const memes = await memePortalContract.getAllWaves();
+        const memes = await memePortalContract.getAllMemes();
 
         let memesCleaned = [];
         memes.forEach((meme) => {
@@ -133,7 +134,9 @@ const App = (props) => {
         let count = await memePortalContract.getTotalMemes();
         console.log('Retrieved total meme count...', count.toNumber());
 
-        const memeTxn = await memePortalContract.sendMeme(fileUrl);
+        const memeTxn = await memePortalContract.sendMeme(
+          'https://bafybeihko3uz7xx7ryhygibbzz7dr5g4hyyxntpuk6ujvvgdqbyacje7qi.ipfs.infura-ipfs.io/'
+        );
         console.log('Mining -- ', memeTxn.hash);
 
         await memeTxn.wait();
@@ -213,7 +216,7 @@ const App = (props) => {
         <div>
           <ul className='divide-y divide-gray-200'>
             {allMemes.map((meme, index) => (
-              <li key={allMemes.email} className='py-4 flex'>
+              <li key={allMemes.index} className='py-4 flex'>
                 <img className='' src={allMemes.fileUrl} alt='' />
                 <div className='ml-3'>
                   <p className='text-sm font-medium text-gray-900'>
