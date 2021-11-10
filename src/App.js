@@ -34,6 +34,7 @@ const App = (props) => {
     }
   };
 
+  const [allMemes, setAllMemes] = useState([]);
   const contractAddress = '0x199649FF8Dc2190482ADbbe683d7a2d5534Ca65d';
 
   const contractABI = abi.abi;
@@ -83,6 +84,39 @@ const App = (props) => {
     }
   };
 
+  const getAllMemes = async () => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const memePortalContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+
+        const memes = await memePortalContract.getAllWaves();
+
+        let memesCleaned = [];
+        memes.forEach((meme) => {
+          memesCleaned.push({
+            address: meme.memer,
+            timestamp: new Date(meme.timestamp * 1000),
+            fileUrl: meme.ipfsFileUrl,
+          });
+        });
+
+        setAllMemes(memesCleaned);
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const meme = async () => {
     try {
       const { ethereum } = window;
@@ -93,8 +127,7 @@ const App = (props) => {
         const memePortalContract = new ethers.Contract(
           contractAddress,
           contractABI,
-          signer,
-          fileUrl
+          signer
         );
 
         let count = await memePortalContract.getTotalMemes();
