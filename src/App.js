@@ -35,7 +35,7 @@ const App = (props) => {
   };
 
   const [allMemes, setAllMemes] = useState([]);
-  const contractAddress = '0x199649FF8Dc2190482ADbbe683d7a2d5534Ca65d';
+  const contractAddress = '0xc5B3886814dF3308dd29fA576d45de6fEf4504d2';
 
   const contractABI = abi.abi;
 
