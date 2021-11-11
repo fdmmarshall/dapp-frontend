@@ -53,9 +53,10 @@ const App = (props) => {
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
       if (accounts.length !== 0) {
-        const account = account[0];
+        const account = accounts[0];
         console.log('Found an authorized account:', account);
         setCurrentAccount(account);
+        getAllMemes();
       } else {
         console.log('No authorized account found');
       }
@@ -79,7 +80,6 @@ const App = (props) => {
 
       console.log('Connected', accounts[0]);
       setCurrentAccount(accounts[0]);
-      getAllMemes();
     } catch (error) {
       console.log(error);
     }
@@ -100,7 +100,7 @@ const App = (props) => {
 
         const memes = await memePortalContract.getAllMemes();
 
-        let memesCleaned = [];
+        const memesCleaned = [];
         memes.forEach((meme) => {
           memesCleaned.push({
             address: meme.memer,
@@ -110,6 +110,8 @@ const App = (props) => {
         });
 
         setAllMemes(memesCleaned);
+        console.log(meme);
+        console.log(allMemes);
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -154,6 +156,7 @@ const App = (props) => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -187,6 +190,7 @@ const App = (props) => {
         <div className='m-8'>
           <ImageUploading
             {...props}
+            value={picture}
             onChange={captureFile}
             withIcon={true}
             withPreview={true}
@@ -216,13 +220,15 @@ const App = (props) => {
         <div>
           <ul className='divide-y divide-gray-200'>
             {allMemes.map((meme, index) => (
-              <li key={allMemes.index} className='py-4 flex'>
-                <img className='' src={allMemes.fileUrl} alt='' />
+              <li key={index} className='py-4 flex'>
+                <img className='' src={meme.fileUrl} alt='meme' />
                 <div className='ml-3'>
                   <p className='text-sm font-medium text-gray-900'>
-                    {allMemes.address}
+                    {meme.address}
                   </p>
-                  <p className='text-sm text-gray-500'>{allMemes.timestamp}</p>
+                  <p className='text-sm text-gray-500'>
+                    {meme.timestamp.toDateString()}
+                  </p>
                 </div>
               </li>
             ))}
