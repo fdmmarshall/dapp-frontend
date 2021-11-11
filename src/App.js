@@ -279,13 +279,30 @@ const App = (props) => {
                       </p>
                     </div>
                   </div>
-                  <img className='h-3/4 w-1/2' src={meme.fileUrl} alt='meme' />
+                  <img
+                    className='h-3/4 w-1/2 m-2'
+                    src={meme.fileUrl}
+                    alt='meme'
+                  />
                 </div>
               </li>
             ))}
           </ul>
         </div>
       </div>
+      <p>
+        Made with
+        <span className='p-2' role='img' aria-label='growing-heart'>
+          💗
+        </span>
+        and help from{' '}
+        <a
+          className='p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500'
+          href='https://buildspace.so/'
+        >
+          buildspace
+        </a>
+      </p>
     </div>
   );
 };
