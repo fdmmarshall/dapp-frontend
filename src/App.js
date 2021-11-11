@@ -136,9 +136,15 @@ const App = (props) => {
         let count = await memePortalContract.getTotalMemes();
         console.log('Retrieved total meme count...', count.toNumber());
 
-        const memeTxn = await memePortalContract.sendMeme(
-          'https://bafybeihko3uz7xx7ryhygibbzz7dr5g4hyyxntpuk6ujvvgdqbyacje7qi.ipfs.infura-ipfs.io/'
-        );
+        console.log(fileUrl);
+
+        const url = fileUrl.pop();
+
+        console.log(url);
+
+        const memeTxn = await memePortalContract.sendMeme(url, {
+          gasLimit: 300000,
+        });
         console.log('Mining -- ', memeTxn.hash);
 
         await memeTxn.wait();
