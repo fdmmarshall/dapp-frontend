@@ -257,18 +257,29 @@ const App = (props) => {
             </button>
           </div>
         </div>
-        <div>
+        <div className='flex flex-col justify-center'>
+          <div className='text-center border-b-2 border-solid border-indigo-700 m-8 font-extrabold text-4xl'>
+            <h1>Wall of Memes</h1>
+          </div>
           <ul className='divide-y divide-gray-200'>
             {allMemes.map((meme, index) => (
-              <li key={index} className='py-4 flex'>
-                <img className='' src={meme.fileUrl} alt='meme' />
-                <div className='ml-3'>
-                  <p className='text-sm font-medium text-gray-900'>
-                    {meme.address}
-                  </p>
-                  <p className='text-sm text-gray-500'>
-                    {meme.timestamp.toDateString()}
-                  </p>
+              <li key={index} className='py-4 flex justify-between'>
+                <div className='flex flex-row'>
+                  <div className='ml-3 flex flex-col justify-evenly'>
+                    <div className='flex flex-col'>
+                      <p>Sent from:{''}</p>
+                      <p className='text-sm font-medium text-gray-900'>
+                        {meme.address}
+                      </p>
+                    </div>
+                    <div className='flex flex-col'>
+                      <p>Sent at:{''}</p>
+                      <p className='text-sm text-gray-500'>
+                        {meme.timestamp.toDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <img className='h-3/4 w-1/2' src={meme.fileUrl} alt='meme' />
                 </div>
               </li>
             ))}
