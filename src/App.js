@@ -300,7 +300,7 @@ const App = (props) => {
           className='p-2 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500'
           href='https://buildspace.so/'
         >
-          buildspace
+          buildspace.
         </a>
       </p>
     </div>
