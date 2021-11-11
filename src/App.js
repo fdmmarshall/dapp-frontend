@@ -120,6 +120,40 @@ const App = (props) => {
     }
   };
 
+  useEffect(() => {
+    let memePortalContract;
+
+    const onNewMeme = (from, timestamp, url) => {
+      console.log('NewMeme', from, timestamp, url);
+      setAllMemes((prevState) => [
+        ...prevState,
+        {
+          address: from,
+          timestamp: new Date(timestamp * 1000),
+          fileUrl: url,
+        },
+      ]);
+    };
+
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      memePortalContract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        signer
+      );
+      memePortalContract.on('NewMeme', onNewMeme);
+    }
+    return () => {
+      if (memePortalContract) {
+        memePortalContract.off('NewMeme', onNewMeme);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const meme = async () => {
     try {
       const { ethereum } = window;
